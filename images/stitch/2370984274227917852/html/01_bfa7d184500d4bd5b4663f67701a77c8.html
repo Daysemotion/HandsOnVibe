@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Claw Code Explorer Panel</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"],
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "2xl": "2rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for clean look */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        /* Syntax Highlighting Colors Simulation */
+        .token-keyword { color: #cf222e; }
+        .token-function { color: #8250df; }
+        .token-string { color: #0a3069; }
+        .token-comment { color: #6e7781; }
+        .token-class { color: #953800; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-800 antialiased overflow-hidden h-screen flex justify-center">
+<!-- Main Mobile Container -->
+<div class="w-full max-w-md h-full bg-white relative shadow-2xl flex flex-col border-x border-slate-200">
+<!-- Status Bar Area (Mock) -->
+<div class="h-12 w-full flex items-center justify-between px-6 pt-2 pb-2 bg-white z-20">
+<span class="text-xs font-semibold text-slate-900">9:41</span>
+<div class="flex items-center space-x-1">
+<span class="material-icons text-sm">signal_cellular_alt</span>
+<span class="material-icons text-sm">wifi</span>
+<span class="material-icons text-sm">battery_full</span>
+</div>
+</div>
+<!-- Panel Content -->
+<div class="flex-1 flex flex-col h-full relative overflow-hidden">
+<!-- Drag Handle / Header -->
+<div class="w-full flex justify-center pt-3 pb-2">
+<div class="w-12 h-1.5 bg-slate-200 rounded-full"></div>
+</div>
+<!-- Search Area -->
+<div class="px-4 pb-4">
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-icons text-slate-400 text-xl">search</span>
+</div>
+<input class="block w-full pl-10 pr-10 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" placeholder="Search files, symbols..." type="text"/>
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer">
+<span class="material-icons text-slate-400 text-xl hover:text-primary transition-colors">filter_list</span>
+</div>
+</div>
+</div>
+<!-- Scrollable List Content -->
+<div class="flex-1 overflow-y-auto scrollbar-hide px-4 pb-24 space-y-6">
+<!-- Recent Files Section -->
+<div>
+<h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 px-1">Recent Files</h3>
+<div class="space-y-1">
+<!-- File Item 1 -->
+<div class="flex items-center p-3 hover:bg-slate-50 rounded-xl cursor-pointer transition-colors group">
+<div class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center mr-3 text-blue-600 font-bold text-xs font-mono border border-blue-100">TS</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-medium text-slate-800 truncate group-hover:text-primary transition-colors">App.tsx</p>
+<p class="text-xs text-slate-500 truncate">src/components</p>
+</div>
+</div>
+<!-- File Item 2 -->
+<div class="flex items-center p-3 hover:bg-slate-50 rounded-xl cursor-pointer transition-colors group">
+<div class="w-8 h-8 rounded-lg bg-yellow-50 flex items-center justify-center mr-3 text-yellow-600 font-bold text-xs font-mono border border-yellow-100">JS</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-medium text-slate-800 truncate group-hover:text-primary transition-colors">utils.js</p>
+<p class="text-xs text-slate-500 truncate">src/lib/helpers</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Search Results Section -->
+<div>
+<h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 px-1">Search Results</h3>
+<div class="space-y-3">
+<!-- Result 1 (Collapsed) -->
+<div class="flex items-center p-3 bg-white border border-slate-100 rounded-xl cursor-pointer hover:border-slate-200 shadow-sm transition-all">
+<div class="w-8 h-8 rounded-lg bg-cyan-50 flex items-center justify-center mr-3 text-cyan-600 font-bold text-xs font-mono border border-cyan-100">RC</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-medium text-slate-800 truncate">AuthContext.tsx</p>
+<p class="text-xs text-slate-500 truncate">src/context</p>
+</div>
+<span class="material-icons text-slate-300 text-sm">chevron_right</span>
+</div>
+<!-- Result 2 (Expanded) -->
+<div class="bg-white border border-primary/30 rounded-xl shadow-md overflow-hidden transition-all ring-1 ring-primary/10">
+<!-- Header -->
+<div class="flex items-center p-3 bg-slate-50/50 border-b border-slate-100 cursor-pointer">
+<div class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center mr-3 text-primary font-bold text-xs font-mono border border-blue-100">TS</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-medium text-slate-900 truncate">userController.ts</p>
+<p class="text-xs text-slate-500 truncate">server/controllers</p>
+</div>
+<span class="material-icons text-primary text-sm transform rotate-90">chevron_right</span>
+</div>
+<!-- Code Preview -->
+<div class="bg-slate-50 p-3 overflow-x-auto">
+<div class="font-mono text-[11px] leading-5 flex">
+<!-- Line Numbers -->
+<div class="flex flex-col text-slate-300 text-right pr-3 select-none border-r border-slate-200 mr-3">
+<span>42</span>
+<span>43</span>
+<span>44</span>
+<span>45</span>
+<span>46</span>
+<span>47</span>
+</div>
+<!-- Code -->
+<div class="flex-1 whitespace-pre">
+<span class="token-keyword">export</span> <span class="token-keyword">async</span> <span class="token-keyword">function</span> <span class="token-function">getUser</span><span class="text-slate-600">(id: </span><span class="token-class">string</span><span class="text-slate-600">) {</span>
+<span class="token-comment">// Fetch user data from DB</span>
+<span class="token-keyword">const</span> <span class="text-slate-800">user</span> <span class="text-slate-600">=</span> <span class="token-keyword">await</span> <span class="text-slate-800">db</span><span class="text-slate-600">.</span><span class="token-function">findUnique</span><span class="text-slate-600">({</span>
+<span class="text-slate-800">where:</span> <span class="text-slate-600">{</span> <span class="text-slate-800">id</span> <span class="text-slate-600">}</span>
+<span class="text-slate-600">});</span>
+<span class="token-keyword">return</span> <span class="text-slate-800">user</span><span class="text-slate-600">;</span>
+<span class="text-slate-600">}</span></div>
+</div>
+</div>
+</div>
+<!-- Result 3 (Collapsed) -->
+<div class="flex items-center p-3 bg-white border border-slate-100 rounded-xl cursor-pointer hover:border-slate-200 shadow-sm transition-all">
+<div class="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center mr-3 text-slate-600 font-bold text-xs font-mono border border-slate-200">MD</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-medium text-slate-800 truncate">README.md</p>
+<p class="text-xs text-slate-500 truncate">root</p>
+</div>
+<span class="material-icons text-slate-300 text-sm">chevron_right</span>
+</div>
+<!-- Result 4 (Collapsed) -->
+<div class="flex items-center p-3 bg-white border border-slate-100 rounded-xl cursor-pointer hover:border-slate-200 shadow-sm transition-all opacity-60">
+<div class="w-8 h-8 rounded-lg bg-purple-50 flex items-center justify-center mr-3 text-purple-600 font-bold text-xs font-mono border border-purple-100">CSS</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-medium text-slate-800 truncate">styles.css</p>
+<p class="text-xs text-slate-500 truncate">src/styles</p>
+</div>
+<span class="material-icons text-slate-300 text-sm">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Sticky Footer Action -->
+<div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-white via-white to-transparent pt-8">
+<button class="w-full bg-primary hover:bg-blue-600 text-white font-medium py-3.5 px-4 rounded-xl shadow-lg shadow-blue-200 flex items-center justify-center transition-all active:scale-[0.98]">
+<span class="material-icons text-sm mr-2">add_circle_outline</span>
+                    Add context
+                </button>
+</div>
+</div>
+</div>
+</body></html>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Pressable, Text, View } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 
 import type { ToolTab } from '@/features/types';
 import { radius, spacing, typography, ui } from '@/theme/tokens';
@@ -7,9 +8,16 @@ import { useAppTheme } from '@/theme/use-app-theme';
 
 const labels: Record<ToolTab, string> = {
   ralph: 'Ralph',
-  clew: 'Clew',
+  claw: 'Claw',
   files: 'Files',
   runs: 'Runs',
+};
+
+const icons: Record<ToolTab, keyof typeof MaterialIcons.glyphMap> = {
+  ralph: 'flag',
+  claw: 'search',
+  files: 'description',
+  runs: 'play-circle-outline',
 };
 
 export const ToolPanelTabs = ({
@@ -23,35 +31,42 @@ export const ToolPanelTabs = ({
 
   return (
     <View style={{ flexDirection: 'row', gap: spacing.xs }} testID="tool-panel-tabs">
-      {(Object.keys(labels) as ToolTab[]).map((tab) => (
-        <Pressable
-          key={tab}
-          testID={`tool-tab-${tab}`}
-          onPress={() => onSelect(tab)}
-          style={({ pressed }) => ({
-            minHeight: ui.minTouch,
-            borderRadius: radius.pill,
-            borderCurve: 'continuous',
-            borderColor: colors.separator,
-            borderWidth: ui.hairline,
-            justifyContent: 'center',
-            paddingHorizontal: spacing.sm,
-            backgroundColor:
-              activeTab === tab
-                ? colors.surfaceElevated
-                : pressed
-                  ? colors.surfaceElevated
-                  : colors.surface,
-          })}
-        >
-          <Text
-            selectable
-            style={{ ...typography.meta, color: activeTab === tab ? colors.text : colors.textMuted }}
+      {(Object.keys(labels) as ToolTab[]).map((tab) => {
+        const isActive = activeTab === tab;
+
+        return (
+          <Pressable
+            key={tab}
+            testID={`tool-tab-${tab}`}
+            onPress={() => onSelect(tab)}
+            style={({ pressed }) => ({
+              minHeight: 36,
+              borderRadius: radius.pill,
+              borderCurve: 'continuous',
+              borderColor: isActive ? `${colors.accent}66` : colors.separator,
+              borderWidth: ui.hairline,
+              justifyContent: 'center',
+              paddingHorizontal: spacing.sm,
+              backgroundColor: isActive || pressed ? `${colors.accent}12` : colors.surface,
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: 4,
+            })}
           >
-            {labels[tab]}
-          </Text>
-        </Pressable>
-      ))}
+            <MaterialIcons name={icons[tab]} size={14} color={isActive ? colors.accent : colors.textMuted} />
+            <Text
+              selectable
+              style={{
+                ...typography.meta,
+                color: isActive ? colors.accent : colors.textMuted,
+                fontWeight: isActive ? '700' : '600',
+              }}
+            >
+              {labels[tab]}
+            </Text>
+          </Pressable>
+        );
+      })}
     </View>
   );
 };

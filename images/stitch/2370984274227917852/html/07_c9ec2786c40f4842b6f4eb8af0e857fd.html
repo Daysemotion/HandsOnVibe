@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HandsOnVibe - Settings &amp; Usage</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    claw: {
+                        bg: "#F9FAFB",       // Very light gray background
+                        card: "#FFFFFF",     // White cards
+                        border: "#E5E7EB",   // Light border
+                        text: "#111827",     // Dark gray/black text
+                        subtext: "#6B7280",  // Muted text
+                        primary: "#0ea5e9",  // Claw-like blue (Sky 500)
+                        hover: "#F3F4F6",    // Hover state
+                    }
+                },
+                fontFamily: {
+                    sans: ['Inter', 'sans-serif'],
+                },
+                fontSize: {
+                    'title': ['18px', '24px'],
+                    'body': ['15px', '22px'],
+                    'small': ['13px', '18px'],
+                },
+                boxShadow: {
+                    'claw-sm': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+                }
+            },
+        },
+    };
+</script>
+<style>
+    body {
+        background-color: #F9FAFB;
+        color: #111827;
+        -webkit-font-smoothing: antialiased;
+    }
+    .claw-card {
+        background-color: white;
+        border: 1px solid #E5E7EB;
+        border-radius: 12px;
+        transition: all 0.2s ease;
+    }
+    .claw-card:active {
+        background-color: #F9FAFB;
+        border-color: #D1D5DB;
+    }::-webkit-scrollbar {
+        width: 0px;
+        background: transparent;
+    }
+</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="flex flex-col h-screen overflow-hidden bg-claw-bg text-claw-text font-sans">
+<header class="flex items-center justify-between px-4 py-3 bg-claw-bg border-b border-claw-border sticky top-0 z-10 shrink-0">
+<div class="flex items-center gap-3">
+<button class="p-2 rounded-lg hover:bg-claw-hover transition-colors">
+<span class="material-symbols-outlined text-[20px] text-claw-text">menu</span>
+</button>
+<h1 class="text-title font-semibold tracking-tight text-claw-text">Settings &amp; Usage</h1>
+</div>
+<div class="h-8 w-8 rounded-full bg-claw-primary/10 text-claw-primary flex items-center justify-center font-medium text-xs">
+            JD
+        </div>
+</header>
+<main class="flex-1 overflow-y-auto p-4 space-y-6">
+<section class="flex flex-col gap-1 px-1">
+<h2 class="text-title font-medium">John Doe</h2>
+<div class="flex items-center gap-2 text-small text-claw-subtext">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-50 text-green-700 ring-1 ring-inset ring-green-600/20">Pro Plan</span>
+<span>•</span>
+<span>johndoe@example.com</span>
+</div>
+</section>
+<section class="space-y-3">
+<div class="flex items-center justify-between px-1">
+<h3 class="text-body font-medium text-claw-text">Model Providers</h3>
+<button class="text-small font-medium text-claw-primary hover:text-sky-600 transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">add</span>
+                    Connect
+                </button>
+</div>
+<div class="grid gap-3">
+<div class="claw-card p-4 flex items-start gap-4 shadow-claw-sm cursor-pointer group">
+<div class="w-10 h-10 rounded-lg bg-white border border-claw-border flex items-center justify-center shrink-0 shadow-sm">
+<svg class="w-6 h-6 text-gray-800" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"></path></svg>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-1">
+<p class="text-body font-medium text-claw-text truncate">OpenAI</p>
+<span class="flex h-2 w-2 rounded-full bg-green-500 ring-2 ring-white"></span>
+</div>
+<p class="text-small text-claw-subtext truncate">GPT-4o, GPT-3.5-Turbo connected</p>
+<div class="mt-3 flex gap-2">
+<span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">Chat</span>
+<span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">Completion</span>
+</div>
+</div>
+</div>
+<div class="claw-card p-4 flex items-start gap-4 shadow-claw-sm cursor-pointer group">
+<div class="w-10 h-10 rounded-lg bg-white border border-claw-border flex items-center justify-center shrink-0 shadow-sm">
+<svg class="w-6 h-6 text-gray-800" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 19h20L12 2zm0 3.8L18.4 17H5.6L12 5.8z"></path></svg>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-1">
+<p class="text-body font-medium text-claw-text truncate">Anthropic</p>
+<span class="flex h-2 w-2 rounded-full bg-green-500 ring-2 ring-white"></span>
+</div>
+<p class="text-small text-claw-subtext truncate">Claude 3.5 Sonnet connected via OAuth</p>
+<div class="mt-3 flex gap-2">
+<span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">Chat</span>
+</div>
+</div>
+</div>
+<div class="claw-card p-4 flex items-start gap-4 shadow-claw-sm cursor-pointer group opacity-80 border-dashed hover:border-solid hover:opacity-100">
+<div class="w-10 h-10 rounded-lg bg-gray-50 border border-claw-border flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-gray-400">api</span>
+</div>
+<div class="flex-1 min-w-0 flex items-center justify-between">
+<div>
+<p class="text-body font-medium text-claw-text truncate">Mistral AI</p>
+<p class="text-small text-claw-subtext">Not connected</p>
+</div>
+<button class="text-small font-medium text-claw-primary bg-sky-50 px-3 py-1.5 rounded-md hover:bg-sky-100 transition-colors">Setup</button>
+</div>
+</div>
+</div>
+</section>
+<section class="space-y-4 pt-2">
+<div class="flex items-center justify-between px-1">
+<h3 class="text-body font-medium text-claw-text">Usage Statistics</h3>
+<div class="flex gap-2">
+<button class="text-xs font-medium text-claw-text bg-white border border-claw-border px-2.5 py-1 rounded shadow-sm hover:bg-gray-50">7D</button>
+<button class="text-xs font-medium text-claw-subtext hover:text-claw-text px-2 py-1">30D</button>
+</div>
+</div>
+<div class="claw-card p-5 shadow-claw-sm space-y-6">
+<div class="flex items-end gap-2">
+<span class="text-3xl font-semibold text-claw-text tracking-tight">1.2M</span>
+<span class="text-small text-claw-subtext mb-1.5">tokens used this period</span>
+</div>
+<div class="relative h-24 w-full">
+<div class="absolute inset-0 flex flex-col justify-between">
+<div class="border-t border-gray-100 w-full h-0"></div>
+<div class="border-t border-gray-100 w-full h-0"></div>
+<div class="border-t border-gray-100 w-full h-0"></div>
+<div class="border-t border-gray-100 w-full h-0"></div>
+</div>
+<svg class="absolute inset-0 w-full h-full overflow-visible" preserveAspectRatio="none">
+<path d="M0 80 C 20 80, 40 60, 60 65 C 80 70, 100 40, 120 45 C 140 50, 160 30, 180 35 C 200 40, 220 10, 240 15 C 260 20, 280 5, 300 20 L 300 96 L 0 96 Z" fill="url(#gradient)" opacity="0.1" stroke="none"></path>
+<path d="M0 80 C 20 80, 40 60, 60 65 C 80 70, 100 40, 120 45 C 140 50, 160 30, 180 35 C 200 40, 220 10, 240 15 C 260 20, 280 5, 300 20" fill="none" stroke="#0ea5e9" stroke-linecap="round" stroke-width="2" vector-effect="non-scaling-stroke"></path>
+<defs>
+<linearGradient id="gradient" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#0ea5e9;stop-opacity:1"></stop>
+<stop offset="100%" style="stop-color:#0ea5e9;stop-opacity:0"></stop>
+</linearGradient>
+</defs>
+</svg>
+<div class="absolute -bottom-6 left-0 right-0 flex justify-between text-[10px] text-claw-subtext font-medium px-1">
+<span>Mon</span>
+<span>Tue</span>
+<span>Wed</span>
+<span>Thu</span>
+<span>Fri</span>
+<span>Sat</span>
+<span>Sun</span>
+</div>
+</div>
+<div class="h-1"></div>
+<div class="space-y-4 pt-4 border-t border-claw-border">
+<div class="space-y-2">
+<div class="flex justify-between text-small">
+<span class="text-claw-text">GPT-4o</span>
+<span class="text-claw-text font-medium">70%</span>
+</div>
+<div class="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
+<div class="h-full bg-claw-primary w-[70%] rounded-full"></div>
+</div>
+<p class="text-xs text-claw-subtext text-right font-mono">850,000 tokens</p>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-small">
+<span class="text-claw-text">Claude 3.5 Sonnet</span>
+<span class="text-claw-text font-medium">25%</span>
+</div>
+<div class="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
+<div class="h-full bg-indigo-400 w-[25%] rounded-full"></div>
+</div>
+<p class="text-xs text-claw-subtext text-right font-mono">320,000 tokens</p>
+</div>
+</div>
+</div>
+</section>
+<section class="space-y-3 pt-2">
+<h3 class="text-body font-medium text-claw-text px-1">System</h3>
+<div class="claw-card divide-y divide-claw-border shadow-claw-sm">
+<div class="p-4 flex items-center justify-between">
+<div>
+<p class="text-body text-claw-text">Auto-connect</p>
+<p class="text-small text-claw-subtext">Use best available model</p>
+</div>
+<div class="relative inline-flex h-6 w-11 items-center rounded-full bg-claw-primary">
+<span class="translate-x-6 inline-block h-5 w-5 transform rounded-full bg-white transition shadow"></span>
+</div>
+</div>
+<div class="p-4 flex items-center justify-between cursor-pointer hover:bg-gray-50 transition-colors">
+<div>
+<p class="text-body text-claw-text">Spending Limit</p>
+<p class="text-small text-claw-subtext">Alerts at $20.00/mo</p>
+</div>
+<span class="material-symbols-outlined text-gray-400">chevron_right</span>
+</div>
+</div>
+</section>
+<div class="h-4"></div>
+</main>
+
+</body></html>

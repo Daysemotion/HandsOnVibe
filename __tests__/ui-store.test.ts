@@ -10,10 +10,10 @@ describe('ui store reducer', () => {
   });
 
   it('opens tools and switches active tab', () => {
-    const next = uiReducer(initialUIState, { type: 'OPEN_TOOLS', tab: 'clew' });
+    const next = uiReducer(initialUIState, { type: 'OPEN_TOOLS', tab: 'claw' });
 
     expect(next.isToolsPanelOpen).toBe(true);
-    expect(next.activeToolTab).toBe('clew');
+    expect(next.activeToolTab).toBe('claw');
   });
 
   it('adds and removes context chips', () => {

@@ -2,7 +2,7 @@
 
 #agents
 .agents/
-images/
+
 
 # dependencies
 node_modules/

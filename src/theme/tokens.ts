@@ -11,8 +11,8 @@ export const spacing = {
 } as const;
 
 export const radius = {
-  soft: 10,
-  card: 14,
+  soft: 12,
+  card: 16,
   pill: 999,
 } as const;
 
@@ -28,13 +28,13 @@ export const typography: Record<'title' | 'body' | 'meta' | 'code', TextStyle> =
     fontWeight: '400',
   },
   meta: {
-    fontSize: 12,
-    lineHeight: 16,
-    fontWeight: '400',
+    fontSize: 13,
+    lineHeight: 18,
+    fontWeight: '500',
   },
   code: {
-    fontSize: 12,
-    lineHeight: 16,
+    fontSize: 11,
+    lineHeight: 17,
     fontFamily: 'Courier',
     fontWeight: '400',
   },

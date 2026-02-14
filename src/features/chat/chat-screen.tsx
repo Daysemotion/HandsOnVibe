@@ -3,7 +3,6 @@ import {
   PanResponder,
   Pressable,
   ScrollView,
-  Text,
   useWindowDimensions,
   View,
 } from 'react-native';
@@ -12,15 +11,15 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AppHeader } from '@/components/app-header';
 import { AssistantCard } from '@/components/assistant-card';
 import { Composer } from '@/components/composer';
-import { ContextChipsRow } from '@/components/context-chips-row';
 import { LeftDrawer } from '@/components/left-drawer';
 import { MessageBubble } from '@/components/message-bubble';
 import { QuickChips } from '@/components/quick-chips';
 import { ToolsPanel } from '@/components/tools-panel';
+import { DSSearchField } from '@/design-system';
 import { projectOptions, quickChipLabels, starterMessages } from '@/features/mock-data';
 import type { ChatMessage, RecentThread } from '@/features/types';
 import { useUIStore } from '@/state/ui-store';
-import { spacing, typography, ui } from '@/theme/tokens';
+import { spacing, ui } from '@/theme/tokens';
 import { useAppTheme } from '@/theme/use-app-theme';
 
 const openByChipMap: Record<string, 'ralph' | 'runs' | undefined> = {
@@ -32,10 +31,21 @@ export const ChatScreen = () => {
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
   const { colors } = useAppTheme();
-  const { state, setThread, openDrawer, closeDrawer, openToolsPanel, closeToolsPanel, setComposerText, addContextChip, removeContextChip } =
-    useUIStore();
+  const {
+    state,
+    setThread,
+    openDrawer,
+    closeDrawer,
+    openToolsPanel,
+    closeToolsPanel,
+    setComposerText,
+    addContextChip,
+    removeContextChip,
+  } = useUIStore();
 
   const [messages, setMessages] = useState<ChatMessage[]>(starterMessages);
+  const [searchQuery, setSearchQuery] = useState('');
+
   const panResponder = useRef(
     PanResponder.create({
       onMoveShouldSetPanResponder: (_, gestureState) =>
@@ -79,6 +89,7 @@ export const ChatScreen = () => {
         id: `m-${Date.now()}`,
         role: 'user',
         text: value,
+        meta: 'Just now',
       },
     ]);
     setComposerText('');
@@ -116,16 +127,28 @@ export const ChatScreen = () => {
           paddingTop: insets.top + spacing.xs,
           paddingHorizontal: ui.screenPadding,
           gap: spacing.sm,
+          backgroundColor: colors.bg,
         }}
       >
         <AppHeader
           projectName={activeProject.name}
-          onPressProject={() => openDrawer()}
-          onPressSearch={() => addContextChip('search: login')}
+          onPressProject={openDrawer}
           onPressMenu={openDrawer}
-          onPressTools={() => openToolsPanel()}
+          onPressTools={() => openToolsPanel('claw')}
         />
-        <ContextChipsRow chips={['task: login']} />
+
+        <DSSearchField
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+          onSubmitEditing={() => {
+            const query = searchQuery.trim();
+            if (query.length > 0) {
+              addContextChip(`search: ${query}`);
+              setSearchQuery('');
+            }
+          }}
+          placeholder="Search project context..."
+        />
       </View>
 
       <ScrollView
@@ -134,8 +157,9 @@ export const ChatScreen = () => {
         contentContainerStyle={{
           paddingHorizontal: ui.screenPadding,
           gap: spacing.sm,
-          paddingTop: spacing.sm,
-          paddingBottom: 220,
+          paddingTop: spacing.md,
+          paddingBottom: 228,
+          backgroundColor: colors.bg,
         }}
       >
         {messages.map((message) => (
@@ -204,21 +228,6 @@ export const ChatScreen = () => {
         onSelectTab={openToolsPanel}
         onAddContext={addContextChip}
       />
-
-      <View
-        pointerEvents="none"
-        style={{
-          position: 'absolute',
-          left: 0,
-          right: 0,
-          bottom: insets.bottom + 4,
-          alignItems: 'center',
-        }}
-      >
-        <Text selectable style={{ ...typography.meta, color: colors.textMuted }}>
-          Chat | Projects | Runs
-        </Text>
-      </View>
     </View>
   );
 };

@@ -22,7 +22,7 @@ export const QuickChips = ({ chips, onPressChip }: QuickChipsProps) => {
       }}
       testID="quick-chips"
     >
-      {chips.slice(0, 4).map((chip) => (
+      {chips.slice(0, 4).map((chip, index) => (
         <Pressable
           key={chip}
           accessibilityLabel={chip}
@@ -31,14 +31,22 @@ export const QuickChips = ({ chips, onPressChip }: QuickChipsProps) => {
             minHeight: ui.minTouch,
             borderRadius: radius.pill,
             borderCurve: 'continuous',
-            borderColor: colors.separator,
+            borderColor: index === 0 ? colors.accent : colors.separator,
             borderWidth: ui.hairline,
-            backgroundColor: pressed ? colors.surfaceElevated : colors.surface,
+            backgroundColor:
+              pressed || index === 0 ? `${colors.accent}${index === 0 ? '14' : '0F'}` : colors.surface,
             justifyContent: 'center',
             paddingHorizontal: spacing.sm,
           })}
         >
-          <Text selectable style={{ ...typography.meta, color: colors.text }}>
+          <Text
+            selectable
+            style={{
+              ...typography.meta,
+              color: index === 0 ? colors.accent : colors.text,
+              fontWeight: '600',
+            }}
+          >
             {chip}
           </Text>
         </Pressable>

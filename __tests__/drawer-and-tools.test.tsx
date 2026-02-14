@@ -11,7 +11,7 @@ describe('drawer and tools interactions', () => {
     fireEvent.press(getByTestId('menu-button'));
     fireEvent.press(getByTestId('drawer-item-t-3'));
 
-    expect(getByText('thread: Add onboarding UI')).toBeTruthy();
+    expect(getByText('thread: Mobile Layout Bug')).toBeTruthy();
   });
 
   it('switches tool panel tabs and keeps panel visible', () => {

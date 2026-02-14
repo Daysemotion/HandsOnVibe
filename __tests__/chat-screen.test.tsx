@@ -25,13 +25,13 @@ describe('chat screen', () => {
     expect(queryByTestId('panel-backdrop')).toBeNull();
   });
 
-  it('adds context chip from clew result', () => {
+  it('adds context chip from claw result', () => {
     const { getByTestId, getByText } = renderWithProviders(<ChatScreen />);
 
     fireEvent.press(getByTestId('tools-button'));
-    fireEvent.press(getByTestId('tool-tab-clew'));
-    fireEvent.press(getByTestId('clew-add-context-cl-1'));
+    fireEvent.press(getByTestId('tool-tab-claw'));
+    fireEvent.press(getByTestId('claw-add-context-cl-1'));
 
-    expect(getByText('file: src/features/chat/chat-screen.tsx')).toBeTruthy();
+    expect(getByText('file: server/controllers/userController.ts')).toBeTruthy();
   });
 });

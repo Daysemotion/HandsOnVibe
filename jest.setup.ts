@@ -7,3 +7,15 @@ jest.mock('react-native-reanimated', () => {
   mockReanimated.default.call = () => {};
   return mockReanimated;
 });
+
+jest.mock('@expo/vector-icons', () => {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const React = require('react');
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const { Text } = require('react-native');
+
+  return {
+    MaterialIcons: ({ name, ...props }: { name: string }) =>
+      React.createElement(Text, props, name ?? 'icon'),
+  };
+});

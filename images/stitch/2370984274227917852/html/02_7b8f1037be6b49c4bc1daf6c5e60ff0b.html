@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Unified Minimal Chat Interface</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "chat-user": "#eff6ff",
+                        "chat-bot": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"],
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "2xl": "2rem", "3xl": "2.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light font-display text-slate-800 antialiased overflow-hidden h-screen flex justify-center">
+<div class="w-full max-w-md h-full bg-white relative shadow-2xl flex flex-col border-x border-slate-200">
+<div class="h-12 w-full flex items-center justify-between px-6 pt-2 pb-2 bg-white z-20">
+<span class="text-xs font-semibold text-slate-900">9:41</span>
+<div class="flex items-center space-x-1">
+<span class="material-icons text-sm">signal_cellular_alt</span>
+<span class="material-icons text-sm">wifi</span>
+<span class="material-icons text-sm">battery_full</span>
+</div>
+</div>
+<div class="px-4 pb-2 pt-2 bg-white z-10">
+<div class="w-full flex justify-center pb-4">
+<div class="w-12 h-1.5 bg-slate-200 rounded-full"></div>
+</div>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-slate-400 text-xl">travel_explore</span>
+</div>
+<input class="block w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-[16px] text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all shadow-sm" placeholder="Search project context..." type="text"/>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto scrollbar-hide px-4 py-4 space-y-6 bg-white">
+<div class="flex flex-col space-y-2 max-w-[90%]">
+<div class="flex items-center space-x-2 px-1">
+<div class="w-5 h-5 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200">
+<span class="material-symbols-outlined text-xs text-slate-500">smart_toy</span>
+</div>
+<span class="text-xs font-semibold text-slate-400">Agent</span>
+<span class="text-xs text-slate-300">10:23 AM</span>
+</div>
+<div class="p-4 bg-white border border-slate-100 rounded-[16px] rounded-tl-sm shadow-sm text-sm text-slate-700 leading-relaxed">
+                    I've analyzed the <span class="font-mono text-xs bg-slate-100 px-1 py-0.5 rounded text-slate-600">userController.ts</span> file. It looks like the <code class="font-mono text-xs text-pink-600">getUser</code> function is missing error handling for cases where the user ID isn't found in the database.
+                </div>
+</div>
+<div class="flex flex-col items-end space-y-2 max-w-[90%] ml-auto">
+<div class="p-4 bg-blue-50/50 border border-blue-100 rounded-[16px] rounded-br-sm text-sm text-slate-800 leading-relaxed">
+                    Good catch. Can you implement a try-catch block and return a 404 if the user is null? Also add the types.
+                </div>
+</div>
+<div class="flex flex-col space-y-2 w-full">
+<div class="flex items-center space-x-2 px-1">
+<div class="w-5 h-5 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200">
+<span class="material-symbols-outlined text-xs text-slate-500">smart_toy</span>
+</div>
+<span class="text-xs font-semibold text-slate-400">Agent</span>
+</div>
+<div class="bg-white border border-slate-200 rounded-[16px] shadow-sm overflow-hidden">
+<div class="flex items-center justify-between px-4 py-2 bg-slate-50 border-b border-slate-100">
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-slate-400 text-sm">code</span>
+<span class="text-xs font-medium text-slate-600">Updated Snippet</span>
+</div>
+<span class="text-[10px] text-slate-400 font-mono">TypeScript</span>
+</div>
+<div class="p-4 bg-white overflow-x-auto">
+<pre class="font-mono text-[11px] leading-5 text-slate-800"><span class="text-purple-600">try</span> {
+  <span class="text-purple-600">const</span> user = <span class="text-purple-600">await</span> db.findUnique({
+    where: { id }
+  });
+  <span class="text-purple-600">if</span> (!user) {
+    <span class="text-purple-600">throw</span> <span class="text-purple-600">new</span> Error(<span class="text-green-600">'User not found'</span>);
+  }
+  <span class="text-purple-600">return</span> user;
+} <span class="text-purple-600">catch</span> (error) {
+  <span class="text-slate-500">// Handle error appropriately</span>
+  console.error(error);
+  <span class="text-purple-600">return</span> <span class="text-purple-600">null</span>;
+}</pre>
+</div>
+<div class="px-4 py-2 border-t border-slate-100 bg-slate-50 flex justify-end">
+<button class="text-xs font-medium text-primary flex items-center hover:text-blue-600 transition-colors">
+<span class="material-symbols-outlined text-sm mr-1">content_copy</span> Copy
+                        </button>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-end space-y-2 max-w-[90%] ml-auto">
+<div class="p-4 bg-blue-50/50 border border-blue-100 rounded-[16px] rounded-br-sm text-sm text-slate-800 leading-relaxed">
+                    Looks correct. Apply it to the file.
+                </div>
+<span class="text-xs text-slate-300 pr-1">Just now</span>
+</div>
+<div class="h-24"></div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-white via-white to-transparent pt-10">
+<div class="relative flex items-end gap-2 bg-white rounded-[24px] shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] border border-slate-200 p-1.5 pl-4 transition-all focus-within:ring-2 focus-within:ring-primary/10 focus-within:border-primary/50">
+<button class="mb-1.5 p-1.5 text-slate-400 hover:text-primary transition-colors rounded-full hover:bg-slate-50">
+<span class="material-symbols-outlined text-xl">add_circle</span>
+</button>
+<textarea class="w-full max-h-32 py-3 bg-transparent border-0 focus:ring-0 text-sm text-slate-800 placeholder-slate-400 resize-none leading-relaxed" placeholder="Ask anything about your code..." rows="1" style="min-height: 44px;"></textarea>
+<button class="bg-primary hover:bg-blue-600 text-white rounded-[20px] w-10 h-10 flex items-center justify-center shadow-md shadow-blue-200 transition-all active:scale-95 flex-shrink-0 mb-0.5">
+<span class="material-symbols-outlined text-lg">arrow_upward</span>
+</button>
+</div>
+</div>
+</div>
+
+</body></html>

@@ -6,16 +6,16 @@ import { renderWithProviders } from '@/test-utils/render-with-providers';
 
 describe('supporting screens', () => {
   it('renders projects list content', () => {
-    const { getByTestId, getByText } = renderWithProviders(<ProjectsScreen />);
+    const { getByTestId, getAllByText } = renderWithProviders(<ProjectsScreen />);
 
     expect(getByTestId('projects-screen')).toBeTruthy();
-    expect(getByText('recipe-app')).toBeTruthy();
+    expect(getAllByText('Vibe Frontend').length).toBeGreaterThan(0);
   });
 
   it('renders runs list content', () => {
-    const { getByTestId, getByText } = renderWithProviders(<RunsScreen />);
+    const { getByTestId, getAllByText } = renderWithProviders(<RunsScreen />);
 
     expect(getByTestId('runs-screen')).toBeTruthy();
-    expect(getByText('Update profile UI')).toBeTruthy();
+    expect(getAllByText('Create login API endpoints').length).toBeGreaterThan(0);
   });
 });

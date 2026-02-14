@@ -1,20 +1,29 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Animated, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
+import { Animated, Pressable, ScrollView, Text, View } from 'react-native';
+import { router, usePathname } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { MaterialIcons } from '@expo/vector-icons';
 
 import { DrawerListItem } from '@/components/drawer-list-item';
-import { recentThreadsBySection } from '@/features/mock-data';
-import type { DrawerSectionKey, RecentThread } from '@/features/types';
+import { DSIconButton, DSSearchField, DSSectionLabel } from '@/design-system';
+import { drawerLibraryItems, projectOptions, recentThreadsBySection } from '@/features/mock-data';
+import type { RecentThread } from '@/features/types';
 import { radius, spacing, typography, ui } from '@/theme/tokens';
 import { useAppTheme } from '@/theme/use-app-theme';
 
-const drawerWidth = 310;
+const drawerWidth = 324;
 
-const sectionMeta: { key: DrawerSectionKey; label: string }[] = [
-  { key: 'today', label: 'Today' },
-  { key: 'yesterday', label: 'Yesterday' },
-  { key: 'previousWeek', label: 'Previous 7 days' },
-];
+const badgeTone = {
+  JS: { bg: '#FFF0DE', text: '#EA580C' },
+  GO: { bg: '#E6F0FF', text: '#2563EB' },
+  PY: { bg: '#FFE7EC', text: '#E11D48' },
+  DOC: { bg: '#EEF2F7', text: '#64748B' },
+} as const;
+
+const libraryTone = {
+  purple: { bg: '#F3E8FF', text: '#7C3AED', icon: 'bookmark' as const },
+  blue: { bg: '#E6F0FF', text: '#2563EB', icon: 'history' as const },
+} as const;
 
 type LeftDrawerProps = {
   visible: boolean;
@@ -26,36 +35,56 @@ type LeftDrawerProps = {
 export const LeftDrawer = ({ visible, activeThreadId, onClose, onSelectThread }: LeftDrawerProps) => {
   const insets = useSafeAreaInsets();
   const { colors } = useAppTheme();
+  const pathname = usePathname();
   const [query, setQuery] = useState('');
   const translateX = useRef(new Animated.Value(-drawerWidth)).current;
 
   useEffect(() => {
     Animated.timing(translateX, {
       toValue: visible ? 0 : -drawerWidth,
-      duration: 180,
+      duration: 190,
       useNativeDriver: true,
     }).start();
   }, [translateX, visible]);
 
-  const filteredSections = useMemo(() => {
-    const normalized = query.trim().toLowerCase();
+  const normalizedQuery = query.trim().toLowerCase();
 
-    if (!normalized) {
-      return recentThreadsBySection;
+  const filteredThreads = useMemo(
+    () =>
+      Object.values(recentThreadsBySection)
+        .flat()
+        .filter((item) =>
+          `${item.title} ${item.summary ?? ''}`.toLowerCase().includes(normalizedQuery),
+        ),
+    [normalizedQuery],
+  );
+
+  const filteredProjects = useMemo(
+    () =>
+      projectOptions.filter((item) =>
+        `${item.name} ${item.stack ?? ''} ${item.updatedAt}`.toLowerCase().includes(normalizedQuery),
+      ),
+    [normalizedQuery],
+  );
+
+  const filteredLibrary = useMemo(
+    () => drawerLibraryItems.filter((item) => item.title.toLowerCase().includes(normalizedQuery)),
+    [normalizedQuery],
+  );
+
+  const navItems = [
+    { id: 'chat', label: 'Chat', icon: 'chat-bubble-outline' as const, href: '/(tabs)/chat' },
+    { id: 'projects', label: 'Projects', icon: 'folder-open' as const, href: '/(tabs)/projects' },
+    { id: 'runs', label: 'Runs', icon: 'play-circle-outline' as const, href: '/(tabs)/runs' },
+  ];
+
+  const safePush = (href: string) => {
+    try {
+      router.push(href as '/(tabs)/chat');
+    } catch {
+      // Jest renders this tree outside expo-router navigation context.
     }
-
-    return {
-      today: recentThreadsBySection.today.filter((item) =>
-        item.title.toLowerCase().includes(normalized),
-      ),
-      yesterday: recentThreadsBySection.yesterday.filter((item) =>
-        item.title.toLowerCase().includes(normalized),
-      ),
-      previousWeek: recentThreadsBySection.previousWeek.filter((item) =>
-        item.title.toLowerCase().includes(normalized),
-      ),
-    };
-  }, [query]);
+  };
 
   return (
     <Animated.View
@@ -68,7 +97,7 @@ export const LeftDrawer = ({ visible, activeThreadId, onClose, onSelectThread }:
         width: drawerWidth,
         borderRightWidth: ui.hairline,
         borderRightColor: colors.separator,
-        backgroundColor: colors.surface,
+        backgroundColor: colors.bg,
         transform: [{ translateX }],
       }}
       testID="left-drawer"
@@ -88,94 +117,186 @@ export const LeftDrawer = ({ visible, activeThreadId, onClose, onSelectThread }:
             justifyContent: 'space-between',
           }}
         >
-          <Text selectable style={{ ...typography.title, color: colors.text }}>
-            Recent
+          <Text selectable style={{ ...typography.title, color: colors.text, fontSize: 24, lineHeight: 30, fontWeight: '700' }}>
+            Vibe
           </Text>
-          <Pressable
-            testID="drawer-close-button"
-            onPress={onClose}
-            style={({ pressed }) => ({
-              minWidth: ui.minTouch,
-              minHeight: ui.minTouch,
-              borderRadius: radius.pill,
-              borderWidth: ui.hairline,
-              borderColor: colors.separator,
-              backgroundColor: pressed ? colors.surfaceElevated : colors.surface,
-              alignItems: 'center',
-              justifyContent: 'center',
-            })}
-          >
-            <Text selectable style={{ ...typography.meta, color: colors.textMuted }}>
-              Close
-            </Text>
-          </Pressable>
+          <DSIconButton
+            icon="settings"
+            testID="drawer-settings"
+            onPress={() => {
+              onClose();
+              safePush('/settings');
+            }}
+            iconSize={17}
+            emphasis="muted"
+          />
         </View>
 
-        <TextInput
+        <DSSearchField
           value={query}
           onChangeText={setQuery}
-          placeholder="Search"
-          placeholderTextColor={colors.textMuted}
+          placeholder="Search threads, projects..."
           testID="drawer-search"
-          style={{
-            minHeight: ui.minTouch,
-            borderRadius: radius.soft,
-            borderWidth: ui.hairline,
-            borderColor: colors.separator,
-            backgroundColor: colors.surfaceElevated,
-            paddingHorizontal: spacing.sm,
-            color: colors.text,
-            ...typography.body,
-          }}
         />
 
         <ScrollView
           style={{ flex: 1 }}
           contentInsetAdjustmentBehavior="automatic"
-          contentContainerStyle={{ gap: spacing.md, paddingBottom: spacing.xl }}
+          contentContainerStyle={{ gap: spacing.lg, paddingBottom: spacing.xxl }}
           showsVerticalScrollIndicator={false}
         >
-          {sectionMeta.map(({ key, label }) => {
-            const list = filteredSections[key];
-            if (!list.length) {
-              return null;
-            }
+          <View style={{ gap: spacing.xs }}>
+            <DSSectionLabel label="Workspace" />
+            <View style={{ gap: spacing.xs }}>
+              {navItems.map((item) => {
+                const isActive = pathname === item.href;
+                return (
+                  <Pressable
+                    key={item.id}
+                    onPress={() => {
+                      onClose();
+                      safePush(item.href);
+                    }}
+                    style={({ pressed }) => ({
+                      minHeight: 40,
+                      borderRadius: radius.soft,
+                      borderCurve: 'continuous',
+                      borderWidth: ui.hairline,
+                      borderColor: isActive ? `${colors.accent}66` : colors.separator,
+                      backgroundColor: isActive || pressed ? `${colors.accent}12` : colors.surface,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      gap: spacing.xs,
+                      paddingHorizontal: spacing.sm,
+                    })}
+                  >
+                    <MaterialIcons name={item.icon} size={16} color={isActive ? colors.accent : colors.textMuted} />
+                    <Text selectable style={{ ...typography.meta, color: isActive ? colors.accent : colors.text, fontWeight: '700' }}>
+                      {item.label}
+                    </Text>
+                  </Pressable>
+                );
+              })}
+            </View>
+          </View>
 
-            return (
-              <View key={key} style={{ gap: spacing.xs }}>
-                <Text selectable style={{ ...typography.meta, color: colors.textMuted }}>
-                  {label}
-                </Text>
-                <View style={{ gap: spacing.xs }}>
-                  {list.map((item) => (
-                    <DrawerListItem
-                      key={item.id}
-                      item={item}
-                      isActive={item.id === activeThreadId}
-                      onPress={() => onSelectThread(item)}
-                    />
-                  ))}
-                </View>
-              </View>
-            );
-          })}
+          <View style={{ gap: spacing.xs }}>
+            <DSSectionLabel label="Recent Threads" />
+            <View style={{ gap: spacing.xs }}>
+              {filteredThreads.map((item) => (
+                <DrawerListItem
+                  key={item.id}
+                  item={item}
+                  isActive={item.id === activeThreadId}
+                  onPress={() => {
+                    onClose();
+                    safePush('/(tabs)/chat');
+                    onSelectThread(item);
+                  }}
+                />
+              ))}
+            </View>
+          </View>
+
+          <View style={{ gap: spacing.xs }}>
+            <DSSectionLabel label="Projects" />
+            <View style={{ gap: spacing.sm }}>
+              {filteredProjects.map((project) => {
+                const badge = project.badge ?? 'DOC';
+                const palette = badgeTone[badge as keyof typeof badgeTone] ?? badgeTone.DOC;
+
+                return (
+                  <View key={project.id} style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.sm }}>
+                    <View
+                      style={{
+                        width: 34,
+                        height: 34,
+                        borderRadius: radius.pill,
+                        backgroundColor: palette.bg,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <Text selectable style={{ ...typography.meta, color: palette.text, fontWeight: '700' }}>
+                        {badge}
+                      </Text>
+                    </View>
+                    <View style={{ flex: 1 }}>
+                      <Text selectable style={{ ...typography.body, color: colors.text, fontWeight: '600' }}>
+                        {project.name}
+                      </Text>
+                      <Text selectable style={{ ...typography.meta, color: colors.textMuted }}>
+                        {project.stack} - {project.updatedAt}
+                      </Text>
+                    </View>
+                    <MaterialIcons name="chevron-right" size={18} color={colors.textMuted} />
+                  </View>
+                );
+              })}
+            </View>
+          </View>
+
+          <View style={{ gap: spacing.xs }}>
+            <DSSectionLabel label="Library" />
+            <View style={{ gap: spacing.sm }}>
+              {filteredLibrary.map((item) => {
+                const palette = libraryTone[item.tone];
+
+                return (
+                  <View key={item.id} style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.sm }}>
+                    <View
+                      style={{
+                        width: 34,
+                        height: 34,
+                        borderRadius: radius.pill,
+                        backgroundColor: palette.bg,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <MaterialIcons name={palette.icon} size={16} color={palette.text} />
+                    </View>
+                    <Text selectable style={{ ...typography.body, color: colors.text, fontWeight: '600' }}>
+                      {item.title}
+                    </Text>
+                  </View>
+                );
+              })}
+            </View>
+          </View>
         </ScrollView>
+      </View>
 
+      <View
+        style={{
+          paddingHorizontal: spacing.md,
+          paddingBottom: insets.bottom + spacing.sm,
+          paddingTop: spacing.sm,
+          backgroundColor: colors.bg,
+          borderTopWidth: ui.hairline,
+          borderTopColor: `${colors.separator}AA`,
+        }}
+      >
         <Pressable
-          testID="drawer-settings"
-          onPress={onClose}
+          onPress={() => {
+            onClose();
+            safePush('/(tabs)/chat');
+            onSelectThread(recentThreadsBySection.today[0]);
+          }}
           style={({ pressed }) => ({
-            minHeight: ui.minTouch,
-            borderRadius: radius.soft,
-            borderWidth: ui.hairline,
-            borderColor: colors.separator,
-            backgroundColor: pressed ? colors.surfaceElevated : colors.surface,
-            paddingHorizontal: spacing.sm,
+            minHeight: 52,
+            borderRadius: radius.pill,
+            borderCurve: 'continuous',
+            backgroundColor: pressed ? '#0D1B3F' : '#111E44',
+            alignItems: 'center',
             justifyContent: 'center',
+            flexDirection: 'row',
+            gap: spacing.xs,
           })}
         >
-          <Text selectable style={{ ...typography.body, color: colors.text }}>
-            Settings
+          <MaterialIcons name="add" size={16} color="#FFFFFF" />
+          <Text selectable style={{ ...typography.body, color: '#FFFFFF', fontWeight: '700' }}>
+            New Thread
           </Text>
         </Pressable>
       </View>

@@ -30,18 +30,18 @@ export const ContextChipsRow = ({ chips, onRemove }: ContextChipsRowProps) => {
         <View
           key={chip}
           style={{
-            backgroundColor: colors.surface,
-            borderColor: colors.separator,
+            backgroundColor: `${colors.accent}12`,
+            borderColor: `${colors.accent}40`,
             borderWidth: ui.hairline,
             borderRadius: radius.pill,
-            minHeight: ui.minTouch,
+            minHeight: 32,
             flexDirection: 'row',
             alignItems: 'center',
             gap: spacing.xs,
             paddingHorizontal: spacing.sm,
           }}
         >
-          <Text selectable style={{ ...typography.meta, color: colors.text }}>
+          <Text selectable style={{ ...typography.meta, color: colors.accent, fontWeight: '600' }}>
             {chip}
           </Text>
           {onRemove ? (
@@ -52,11 +52,11 @@ export const ContextChipsRow = ({ chips, onRemove }: ContextChipsRowProps) => {
               style={({ pressed }) => ({
                 borderRadius: radius.pill,
                 paddingHorizontal: spacing.xs,
-                paddingVertical: spacing.xxs,
-                backgroundColor: pressed ? colors.surfaceElevated : colors.surface,
+                paddingVertical: 2,
+                backgroundColor: pressed ? `${colors.accent}25` : 'transparent',
               })}
             >
-              <Text selectable style={{ ...typography.meta, color: colors.textMuted }}>
+              <Text selectable style={{ ...typography.meta, color: colors.accentStrong, fontWeight: '700' }}>
                 x
               </Text>
             </Pressable>

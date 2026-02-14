@@ -14,14 +14,22 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: colors.text,
+        sceneStyle: {
+          backgroundColor: colors.bg,
+        },
+        tabBarHideOnKeyboard: true,
+        tabBarActiveTintColor: colors.accent,
         tabBarInactiveTintColor: colors.textMuted,
         tabBarStyle: {
-          backgroundColor: colors.surface,
-          borderTopColor: colors.separator,
+          display: 'none',
+        },
+        tabBarItemStyle: {
+          borderRadius: 12,
+          marginHorizontal: 4,
         },
         tabBarLabelStyle: {
           fontSize: 12,
+          fontWeight: '700',
         },
       }}
     >

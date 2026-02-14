@@ -4,10 +4,12 @@ export type AppColors = {
   bg: string;
   surface: string;
   surfaceElevated: string;
+  surfaceMuted: string;
   text: string;
   textMuted: string;
   separator: string;
   accent: string;
+  accentStrong: string;
   bubbleUser: string;
   bubbleAssistant: string;
   backdrop: string;
@@ -17,35 +19,39 @@ export type AppColors = {
 export const lightColors: AppColors = {
   bg: '#F6F7F8',
   surface: '#FFFFFF',
-  surfaceElevated: '#F2F3F5',
-  text: '#1A1B1E',
-  textMuted: '#6C7078',
-  separator: '#DDE0E5',
-  accent: '#0A84FF',
-  bubbleUser: '#E8F2FF',
+  surfaceElevated: '#F8FAFC',
+  surfaceMuted: '#F1F5F9',
+  text: '#111827',
+  textMuted: '#6B7280',
+  separator: '#E5E7EB',
+  accent: '#137FEC',
+  accentStrong: '#0A67C8',
+  bubbleUser: '#EFF6FF',
   bubbleAssistant: '#FFFFFF',
-  backdrop: 'rgba(17, 20, 24, 0.36)',
+  backdrop: 'rgba(15, 23, 42, 0.28)',
   tone: {
-    success: { bg: '#E8F4EC', text: '#1E5D39' },
-    warning: { bg: '#F8F1E5', text: '#7D5A13' },
-    danger: { bg: '#F7E9E9', text: '#8A2B2B' },
+    success: { bg: '#E7F7EE', text: '#18623B' },
+    warning: { bg: '#FFF3E2', text: '#85551E' },
+    danger: { bg: '#FDEBEC', text: '#8A2A2E' },
   },
 };
 
 export const darkColors: AppColors = {
-  bg: '#0E1116',
-  surface: '#171B22',
-  surfaceElevated: '#1F2530',
-  text: '#E7ECF3',
-  textMuted: '#A3ABB8',
-  separator: '#2B3340',
-  accent: '#5AA9FF',
-  bubbleUser: '#1C2D43',
-  bubbleAssistant: '#171B22',
-  backdrop: 'rgba(2, 4, 8, 0.62)',
+  bg: '#101922',
+  surface: '#15202B',
+  surfaceElevated: '#1A2734',
+  surfaceMuted: '#223447',
+  text: '#E7EDF5',
+  textMuted: '#9AA9BC',
+  separator: '#2A3A4D',
+  accent: '#6EA8FF',
+  accentStrong: '#5A97F3',
+  bubbleUser: '#1E3858',
+  bubbleAssistant: '#15202B',
+  backdrop: 'rgba(2, 6, 12, 0.72)',
   tone: {
-    success: { bg: '#1D3327', text: '#9FD8B5' },
-    warning: { bg: '#3A301F', text: '#E0C182' },
-    danger: { bg: '#3C2323', text: '#F1B2B2' },
+    success: { bg: '#183A2A', text: '#A9E2BF' },
+    warning: { bg: '#3F301D', text: '#F0C78D' },
+    danger: { bg: '#412527', text: '#F4BCBD' },
   },
 };

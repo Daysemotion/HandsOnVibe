@@ -12,6 +12,8 @@ export default function RootLayout() {
         <UIProvider>
           <Stack screenOptions={{ headerShown: false }}>
             <Stack.Screen name="(tabs)" />
+            <Stack.Screen name="(auth)" />
+            <Stack.Screen name="settings" />
           </Stack>
         </UIProvider>
       </SafeAreaProvider>
